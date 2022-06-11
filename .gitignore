@@ -1,0 +1,17 @@
+
+models/srcim_model_8375.h5
+models/srcim_model_9000.h5
+models/srcim_model_9500.h5
+models/srcim_model_9500_v2.h5
+models/srcim_model_9625.h5
+models/srcim_model_9625_v2.h5
+models/srcim_model_weights_8375.h5
+models/srcim_model_weights_9000.h5
+models/srcim_model_weights_9500.h5
+models/srcim_model_weights_9500_v2.h5
+models/srcim_model_weights_9625.h5
+models/srcim_model_weights_9625_v2.h5
+src/main/resources/srcim_model_9625.h5
+src/main/resources/srcim_model_weights_9625.h5
+target/classes/srcim_model_weights_9625.h5
+target/classes/srcim_model_9625.h5
