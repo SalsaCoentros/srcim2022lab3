@@ -38,10 +38,13 @@ public class SkillExecutionResponse extends AchieveREResponder {
         //block(5000);
         if(((ResourceAgent) myAgent).reservedSkill.equals(Constants.SK_QUALITY_CHECK)) {
             InspectionModel inspector = new InspectionModel("srcim_model_9625.h5");
-            String path = "C:\\Users\\danie\\Desktop\\Faculdade\\SRCIM\\Pratica\\3\\srcim2022lab3\\images\\" + myAgent.getLocalName() + ".jpg";
+            //NOT OK test path
+            //String path = "C:\\Users\\danie\\Desktop\\Faculdade\\SRCIM\\Pratica\\3\\srcim2022lab3\\images\\product_DEFECT.jpg";
+            //OK test path
+            String path = "C:\\Users\\danie\\Desktop\\Faculdade\\SRCIM\\Pratica\\3\\srcim2022lab3\\images\\product_OK.jpg";
+            // Correct functioning path
+            //String path = "C:\\Users\\danie\\Desktop\\Faculdade\\SRCIM\\Pratica\\3\\srcim2022lab3\\images\\" + myAgent.getLocalName() + ".jpg";
             int result = inspector.predict(inspector.loadImage(path, 512, 512, 3)); //result = 1 means that it's NOT OK
-            System.out.println("Result: " + result);
-
 
             msg.setPerformative(ACLMessage.INFORM); //FOR NOW!! JUST FOR TESTING
             msg.setOntology(Constants.ONTOLOGY_QUALITY_CHECK);

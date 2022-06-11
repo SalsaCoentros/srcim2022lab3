@@ -64,13 +64,13 @@ public class ResourceAgent extends Agent {
 
 
         //test
-        if (this.getLocalName().equals("QualityControlStation1")) {
+        /*if (this.getLocalName().equals("QualityControlStation1")) {
             InspectionModel inspector = new InspectionModel("srcim_model_9625.h5");
             String path = "C:\\Users\\danie\\Desktop\\Faculdade\\SRCIM\\Pratica\\3\\srcim2022lab3\\images\\" + "product_DEFECT" + ".jpg";
             int result = inspector.predict(inspector.loadImage(path, 512, 512, 3));
             System.out.println("Result: " + result);
 
-        }
+        }*/
     }
 
     @Override

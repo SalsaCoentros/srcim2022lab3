@@ -1,5 +1,6 @@
 package Product;
 
+import Utilities.Constants;
 import jade.core.Agent;
 import jade.core.behaviours.SequentialBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -25,6 +26,7 @@ public class ProductAgent extends Agent {
     boolean skillDone = false;
     int objectWeight = 6;
     String productType;
+    boolean qualityCheckDone = false;
     
     @Override
     protected void setup() {
@@ -34,19 +36,23 @@ public class ProductAgent extends Agent {
 
         this.productType = (String) args[1];
 
+        boolean qualityCheck = false;
         System.out.println("Product launched: " + this.id + " Requires: " + executionPlan);
         SequentialBehaviour sb = new SequentialBehaviour();
         for (String s : executionPlan) {
-            sb.addSubBehaviour(new newExecPlanStep(s));
-            sb.addSubBehaviour(new GetSkillfulAgent());
-            sb.addSubBehaviour(new SkillNegotiation(this, cfp));
-            sb.addSubBehaviour(new GetSkillfulAgent());
-            sb.addSubBehaviour(new getTransport(this, cfp));
-            sb.addSubBehaviour(new InformResourceClear(this, msgInformRes));
-            sb.addSubBehaviour(new SkillExecutionRequest(this, msgExecuteSkill));
+            if (!qualityCheck) {
+                sb.addSubBehaviour(new newExecPlanStep(s));
+                sb.addSubBehaviour(new GetSkillfulAgent());
+                sb.addSubBehaviour(new SkillNegotiation(this, cfp));
+                sb.addSubBehaviour(new GetSkillfulAgent());
+                sb.addSubBehaviour(new getTransport(this, cfp));
+                sb.addSubBehaviour(new InformResourceClear(this, msgInformRes));
+                sb.addSubBehaviour(new SkillExecutionRequest(this, msgExecuteSkill));
+            }
+
+            if (s.equals(Constants.SK_QUALITY_CHECK))
+                qualityCheck = true;
         }
-        sb.addSubBehaviour(new InformResourceClear(this, msgInformRes));
-        sb.addSubBehaviour(new DestroyProduct());
         this.addBehaviour(sb);
     }
 
