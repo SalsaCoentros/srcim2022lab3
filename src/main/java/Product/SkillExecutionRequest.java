@@ -78,8 +78,8 @@ public class SkillExecutionRequest extends AchieveREInitiator{
             System.out.print(myAgent.getLocalName() + ": " + inform.getSender().getLocalName() + " has DONE the skill " + ((ProductAgent)myAgent).currentSkill
                                 + " with the result: ");
             switch (quality) {
+                case 0 -> System.out.println("OK");
                 case 1 -> System.out.println("NOT OK");
-                case 2 -> System.out.println("OK");
             }
         }
     }

@@ -34,21 +34,26 @@ public class SkillExecutionResponse extends AchieveREResponder {
     protected ACLMessage prepareResultNotification (ACLMessage request, ACLMessage response) {
         ACLMessage msg = request.createReply();
         System.out.println(request.getSender().getLocalName() + ": " + myAgent.getLocalName() + " is STARTING the skill: " + ((ResourceAgent) myAgent).reservedSkill);
-        ((ResourceAgent) myAgent).myLib.executeSkill(((ResourceAgent) myAgent).reservedSkill);
+        boolean result = ((ResourceAgent) myAgent).myLib.executeSkill(((ResourceAgent) myAgent).reservedSkill);
         //block(5000);
         if(((ResourceAgent) myAgent).reservedSkill.equals(Constants.SK_QUALITY_CHECK)) {
-            InspectionModel inspector = new InspectionModel("srcim_model_9625.h5");
+            //InspectionModel inspector = new InspectionModel("srcim_model_9625.h5");
             //NOT OK test path
-            String path = "C:\\Users\\danie\\Desktop\\Faculdade\\SRCIM\\Pratica\\3\\srcim2022lab3\\images\\product_DEFECT.jpg";
+            //String path = "C:\\Users\\danie\\Desktop\\Faculdade\\SRCIM\\Pratica\\3\\srcim2022lab3\\images\\product_DEFECT.jpg";
             //OK test path
             //String path = "C:\\Users\\danie\\Desktop\\Faculdade\\SRCIM\\Pratica\\3\\srcim2022lab3\\images\\product_OK.jpg";
             // Correct functioning path
             //String path = "C:\\Users\\danie\\Desktop\\Faculdade\\SRCIM\\Pratica\\3\\srcim2022lab3\\images\\" + myAgent.getLocalName() + ".jpg";
-            int result = inspector.predict(inspector.loadImage(path, 512, 512, 3)); //result = 1 means that it's NOT OK
+            //int result = inspector.predict(inspector.loadImage(path, 512, 512, 3)); //result = 1 means that it's NOT OK
 
-            msg.setPerformative(ACLMessage.INFORM); //FOR NOW!! JUST FOR TESTING
+            msg.setPerformative(ACLMessage.INFORM);
             msg.setOntology(Constants.ONTOLOGY_QUALITY_CHECK);
-            msg.setContent(String.valueOf(result));
+            int content;
+            if (result)
+                content = 0;
+            else
+                content = 1;
+            msg.setContent(String.valueOf(content));
         } else {
             msg.setPerformative(ACLMessage.INFORM);
         }

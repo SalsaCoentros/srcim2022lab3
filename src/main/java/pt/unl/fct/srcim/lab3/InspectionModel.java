@@ -34,6 +34,7 @@ public class InspectionModel {
         String simpleMlp = null;
         try {
             simpleMlp = new ClassPathResource(filepath).getFile().getPath();
+            System.out.println("Path: " + simpleMlp);
         } catch (IOException e) {
             e.printStackTrace();
         }

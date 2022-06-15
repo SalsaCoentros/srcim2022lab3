@@ -10,6 +10,7 @@ import coppelia.CharWA;
 import coppelia.IntW;
 import coppelia.remoteApi;
 import jade.core.Agent;
+import pt.unl.fct.srcim.lab3.InspectionModel;
 
 import java.io.*;
 import java.util.logging.Level;
@@ -28,6 +29,7 @@ public class SimResourceLibrary implements IResource {
     public int clientID = -1;
     Agent myAgent;
     final long timeout = 30000;
+    InspectionModel inspector;
     
     @Override
     public void init(Agent a) {
@@ -35,6 +37,9 @@ public class SimResourceLibrary implements IResource {
         if(sim == null) sim = new remoteApi();
         sim = new remoteApi();
         int port = 0;
+        if (this.myAgent.getLocalName().equals("QualityControlStation1") || this.myAgent.getLocalName().equals("QualityControlStation2") )
+            inspector = new InspectionModel("srcim_model_9625.h5");
+
         switch(myAgent.getLocalName()){
             case "GlueStation1": port=19997; break;
             case "GlueStation2": port=19998; break;
@@ -74,8 +79,21 @@ public class SimResourceLibrary implements IResource {
                 // the corresponding image path. The simulation should store images in the images folder with the name of the station + .jpg.
                 // e.g. "images/QualityControlStation1.jpg"
 				// This can then be used to adapt the control logic based on the inspection result.
+
                 case "QualityControlStation1": /*TBD*/ break;
                 case "QualityControlStation2": /*TBD*/ break;
+            }
+            //NOT OK test path
+            //String path = "C:\\Users\\danie\\Desktop\\Faculdade\\SRCIM\\Pratica\\3\\srcim2022lab3\\images\\product_DEFECT.jpg";
+            //OK test path
+            //String path = "C:\\Users\\danie\\Desktop\\Faculdade\\SRCIM\\Pratica\\3\\srcim2022lab3\\images\\product_OK.jpg";
+            // Correct functioning path
+            String path = "C:\\Users\\danie\\Desktop\\Faculdade\\SRCIM\\Pratica\\3\\srcim2022lab3\\images\\" + myAgent.getLocalName() + ".jpg";
+            int result = inspector.predict(inspector.loadImage(path, 512, 512, 3));
+            if (result == 1) { //is NOT OK
+                return false;
+            } else {
+                return true;
             }
         }
 
